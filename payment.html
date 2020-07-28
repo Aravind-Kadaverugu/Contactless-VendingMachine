@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+
+<head>
+    <!-- Add meta tags for mobile and IE -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style type="text/css">
+    	button{
+    		border-radius: 100%;
+    	}
+    	a{
+    		color: white;
+    	}
+    	a:hover{
+    		color: white;
+    	}
+    	h1{
+    		color: black;
+    	}
+    	.container-fluid{
+    		border: 1px black dashed;
+    		background: #54b948;
+    		width: 50%;
+    		padding-top: 20px;
+    	}
+    </style>
+</head>
+
+<body>
+    <!-- Set up a container element for the button -->
+    <div class="container">
+
+    	
+    	<div class="px-4 px-lg-0">
+ 
+
+  <div class="pb-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
+
+          <!-- Shopping cart table -->
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" class="border-0 bg-light">
+                    <div class="p-2 px-3 text-uppercase">Product</div>
+                  </th>
+                  <th scope="col" class="border-0 bg-light">
+                    <div class="py-2 text-uppercase">Price</div>
+                  </th>
+                  <th scope="col" class="border-0 bg-light">
+                    <div class="py-2 text-uppercase">Quantity</div>
+                  </th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row" class="border-0">
+                    <div class="p-2">
+                      <img id="myImg" src="juice.png" alt="" width="70" class="img-fluid rounded shadow-sm">
+                      <div class="ml-3 d-inline-block align-middle">
+                        <h5 class="mb-0" id="demo"> <a href="#" class="text-dark d-inline-block align-middle">Timex Unisex Originals</a></h5>
+                      </div>
+                    </div>
+                  </th>
+                  <td class="border-0 align-middle" id="demo1"><strong>$79.00</strong></td>
+                  <td class="border-0 align-middle"><strong>1</strong></td>
+                 
+                </tr>
+             
+
+              </tbody>
+            </table>
+          </div>
+          <!-- End -->
+        </div>
+      </div>
+
+     
+
+    </div>
+  </div>
+</div>
+    <center>
+    	<div id="paypal-button-container" ></div>
+    	<h5>(OR)</h5>
+	
+	<br>
+
+	
+	<button type="button" class="btn btn-primary btn-block" style="border-radius: 20px;width:70%;padding-top:7px;padding-bottom:7px; "><a href="gpay.html">Google Pay</a></button>
+	</center>
+
+</div>
+    <div class="container">
+
+        <br/>
+        
+    <center>
+<br>
+        <div id="paypal-button-container" ></div>
+        <h5>(OR)</h5>
+    
+    <br>
+
+    
+    <button type="button" class="btn btn-primary btn-block" style="border-radius: 20px;width:70%;padding-top:7px;background:blue;padding-bottom:7px; "><a href="gpay.html">Phone Pay</a></button>
+    </center>
+
+    </div>
+    	
+
+    <!-- Include the PayPal JavaScript SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=Aev7LORt5XqOyrghDDrpiQARQhQeENmfOKtYVyV3f7Tid6INW4aYur65mWMB9oUf_ewacjNoBXk45wPv&currency=INR"></script>
+
+    <script>
+    	const params = new URLSearchParams(window.location.search);
+		function requestForVend(drinkId) {
+           var xhttp = new XMLHttpRequest();
+           xhttp.onreadystatechange = function() {
+             if (this.readyState == 4 && this.status == 200) {
+               window.alert('Vending in progress!!! Enjoy your Drink!!! ');
+            }
+		   };
+           xhttp.open("GET", "Vend.do?b="+drinkId, true);
+           xhttp.send();
+        }
+		var item = params.get('id');
+        var name = params.get('name');
+		var price = params.get('price');
+		document.getElementById("demo").innerHTML = name;
+		document.getElementById("demo1").innerHTML = price;
+        document.getElementById("myImg").src = name+".jpg";
+        // Render the PayPal button into #paypal-button-container
+        paypal.Buttons({
+
+            style: {
+                color:  'blue',
+                shape:  'pill',
+                label:  'pay',
+                height: 40
+            },
+             // Set up the transaction
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: price
+                        }
+                    }]
+                });
+            },
+
+            // Finalize the transaction
+            onApprove: function(data, actions) {;
+                return actions.order.capture().then(function(details) {
+                    // Show a success message to the buyer
+                    
+                    window.alert('Transaction completed by ' + details.payer.name.given_name + '!');
+					requestForVend(item);
+                    window.location.href="index.html";
+
+                });
+            }
+
+        }).render('#paypal-button-container');
+    </script>
+</body>
+    
