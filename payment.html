@@ -103,7 +103,6 @@
         
     <center>
 <br>
-        <div id="paypal-button-container" ></div>
         <h5>(OR)</h5>
     
     <br>
@@ -116,7 +115,7 @@
     	
 
     <!-- Include the PayPal JavaScript SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=Aev7LORt5XqOyrghDDrpiQARQhQeENmfOKtYVyV3f7Tid6INW4aYur65mWMB9oUf_ewacjNoBXk45wPv&currency=INR"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=Aev7LORt5XqOyrghDDrpiQARQhQeENmfOKtYVyV3f7Tid6INW4aYur65mWMB9oUf_ewacjNoBXk45wPv&currency=INR"></script> 
 
     <script>
     	const params = new URLSearchParams(window.location.search);
@@ -137,7 +136,7 @@
 		document.getElementById("demo1").innerHTML = price;
         document.getElementById("myImg").src = name+".jpg";
         // Render the PayPal button into #paypal-button-container
-        paypal.Buttons({
+         paypal.Buttons({
 
             style: {
                 color:  'blue',
